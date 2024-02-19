@@ -1,0 +1,42 @@
+@startuml
+class Customer {
+    -id: int
+    -tickets[0...*]: Ticket[]
+    -cashProvider: CashProvider
+
+    + buyTicket(ticket: Ticket): boolean
+    + repealTicket(ticket: Ticket): boolean
+    + searchTicket(rootNumber: int): Tickets[0...*]
+}
+
+class Ticket {
+    -rootNumber: int
+    -price: int
+    -dataStart: DateTime
+    -dataEnd: DateTime
+    -place: int
+    -isValid: boolean
+}
+
+class TicketProvider {
+    + getTickets(rootNumber: int, Ticket[] tickets): Tickets[0...*]
+    + updateTicketStatus(ticket): boolean
+}
+
+class CashProvider {
+    -card: long
+    -isAuthorization: boolean
+
+    + buy(price: int): boolean
+    + repealTicket(price: int): boolean
+    + authorization(customer: Customer): boolean
+}
+
+Customer "0...*   " o-- Ticket
+Customer -- TicketProvider
+Ticket <.. TicketProvider
+Customer *-- CashProvider
+CashProvider-- TicketProvider
+
+
+@enduml
