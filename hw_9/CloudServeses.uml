@@ -1,0 +1,36 @@
+User {
+	idUser integer pk increments
+	name string pk increments
+	hash text
+	email string
+}
+
+Server {
+	idServer integer pk increments
+	CPU integer
+	RAM integer
+	SSD integer
+	idOS text *> OS.idOS
+}
+
+OS {
+	idOS integer pk increments
+	osName string
+}
+
+Tariff {
+	idTariff integer pk increments
+	idServer integer >* Server.idServer
+	price float
+	term integer
+	nameTariff string
+}
+
+Order {
+	idOrder integer pk increments
+	idUser integer > User.idUser
+	idTariff integer > Tariff.idTariff
+	term integer
+	sum float
+	ipAdress integer
+}
