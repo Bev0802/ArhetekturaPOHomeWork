@@ -1,0 +1,46 @@
+openapi: 3.0.3
+info:
+  title: Infrastructure Metrics
+  version: 1.0.0
+
+paths: {}
+
+components:
+  schemas:
+    Metric:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: number
+
+    CPUUsage:
+      allOf:
+        - $ref: '#/components/schemas/Metric'
+        - type: object
+          properties:
+            name:
+              const: cpu_usage
+
+    MemoryUsage:
+      allOf:
+        - $ref: '#/components/schemas/Metric'
+        - type: object
+          properties:
+            name:
+              const: memory_usage
+
+    DiskUsage:
+      allOf:
+        - $ref: '#/components/schemas/Metric'
+        - type: object
+          properties:
+            name:
+              const: disk_usage
+
+  responses:
+    Healthy:
+      description: All metrics are within acceptable ranges.
+    Unhealthy:
+      description: One or more metrics are outside acceptable ranges.

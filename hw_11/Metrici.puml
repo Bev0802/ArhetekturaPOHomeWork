@@ -1,0 +1,27 @@
+@startuml
+
+class Metric {
+    - name: str
+    - value: float
+}
+
+class CPUUsage {
+    + get_name()
+    + get_value()
+}
+
+class MemoryUsage {
+    + get_name()
+    + get_value()
+}
+
+class DiskUsage {
+    + get_name()
+    + get_value()
+}
+
+CPUUsage --|> Metric
+MemoryUsage --|> Metric
+DiskUsage --|> Metric
+
+@enduml

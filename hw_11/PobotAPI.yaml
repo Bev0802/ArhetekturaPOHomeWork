@@ -1,0 +1,213 @@
+
+"openapi": "3.0.3"
+"info":
+  "title": "Robot API"
+  "description": "An API for interacting with robots"
+  "version": "1.0.0"
+"servers":
+  -
+    "url": "http://localhost:8000/api"
+"components":
+  "schemas":
+    "File":
+      "type": "object"
+      "properties":
+        "name":
+          "type": "string"
+          "format": "binary"
+    "RobotData":
+      "type": "object"
+      "properties":
+        "id":
+          "type": "integer"
+        "name":
+          "type": "string"
+        "status":
+          "type": "string"
+          "enum":
+            - "idle"
+            - "working"
+            - "error"
+    "DiagnosticData":
+      "type": "object"
+      "properties":
+        "id":
+          "type": "integer"
+        "robot_id":
+          "type": "integer"
+        "timestamp":
+          "type": "string"
+          "format": "date-time"
+    "RobotConfiguration":
+      "type": "object"
+      "properties":
+        "id":
+          "type": "integer"
+        "robot_id":
+          "type": "integer"
+        "name":
+          "type": "string"
+        "data":
+          "type": "object"
+          "description": "The configuration data"
+          "additionalProperties": true
+    "RobotAPIResponse":
+      "type": "object"
+      "properties":
+        "success":
+          "type": "boolean"
+          "description": "Whether the request was successful"
+        "message":
+          "type": "string"
+          "description": "A message describing the result of the request"
+    "HealthCheckResponse":
+      "type": "object"
+      "properties":
+        "api_gateway":
+          "type": "boolean"
+          "description": "Whether the API gateway is up"
+        "business_logic":
+          "type": "boolean"
+          "description": "Whether the business logic is functioning correctly"
+        "data_management_layer":
+          "type": "boolean"
+          "description": "Whether the data management layer is functioning correctly"
+        "metrics":
+          "type": "boolean"
+          "description": "Whether the metrics are being collected correctly"
+    "Metrics":
+      "type": "object"
+      "properties":
+        "cpu_usage":
+          "type": "number"
+        "memory_usage":
+          "type": "number"
+        "disk_usage":
+          "type": "number"
+  "securitySchemes":
+    "api_key":
+      "type": "apiKey"
+      "name": "Authorization"
+      "in": "header"
+  "responses":
+    "Unauthorized":
+      "description": "Unauthorized access"
+"security":
+  -
+    "api_key": []
+"paths":
+  "/robot/{robot_id}/firmware":
+    "put":
+      "summary": "Update firmware"
+      "description": "Update firmware for a specific robot"
+      "parameters":
+        -
+          "name": "robot_id"
+          "in": "path"
+          "required": true
+          "description": "The ID of the robot"
+          "schema":
+            "type": "integer"
+      "requestBody":
+        "content":
+          "multipart/form-data":
+            "schema":
+              "type": "object"
+              "properties":
+                "firmware_file":
+                  "type": "File"
+      "responses":
+        "200":
+          "description": "Firmware updated successfully"
+          "content":
+            "application/json":
+              "schema":
+                "type": "object"
+                "properties":
+                  "success":
+                    "type": "boolean"
+                    "description": "Whether the request was successful"
+                  "message":
+                    "type": "string"
+                    "description": "A message describing the result of the request"
+  "/robot/{robot_id}/diagnostics":
+    "post":
+      "summary": "Send diagnostics"
+      "description": "Send diagnostics for a specific robot"
+      "parameters":
+        -
+          "name": "robot_id"
+          "in": "path"
+          "required": true
+          "description": "The ID of the robot"
+          "schema":
+            "type": "integer"
+      "requestBody":
+        "content":
+          "application/json":
+            "schema":
+              "type": "object"
+              "properties":
+                "id":
+                  "type": "integer"
+                "robot_id":
+                  "type": "integer"
+                "timestamp":
+                  "type": "string"
+                  "format": "date-time"
+      "responses":
+        "200":
+          "description": "Diagnostics sent successfully"
+          "content":
+            "application/json":
+              "schema":
+                "type": "object"
+                "properties":
+                  "success":
+                    "type": "boolean"
+                    "description": "Whether the request was successful"
+                  "message":
+                    "type": "string"
+                    "description": "A message describing the result of the request"
+  "/robot/{robot_id}/configuration":
+    "put":
+      "summary": "Configure robot"
+      "description": "Configure a specific robot"
+      "parameters":
+        -
+          "name": "robot_id"
+          "in": "path"
+          "required": true
+          "description": "The ID of the robot"
+          "schema":
+            "type": "integer"
+      "requestBody":
+        "content":
+          "application/json":
+            "schema":
+              "type": "object"
+              "properties":
+                "id":
+                  "type": "integer"
+                "robot_id":
+                  "type": "integer"
+                "name":
+                  "type": "string"
+                "data":
+                  "type": "object"
+                  "description": "The configuration data"
+                  "additionalProperties": true
+      "responses":
+        "200":
+          "description": "Robot configured successfully"
+          "content":
+            "application/json":
+              "schema":
+                "type": "object"
+                "properties":
+                  "success":
+                    "type": "boolean"
+                    "description": "Whether the request was successful"
+                  "message":
+                    "type": "string"
+                    "description": "A message describing the result of the request"

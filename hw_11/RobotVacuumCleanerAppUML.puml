@@ -1,0 +1,58 @@
+@startuml
+class RobotAPIConnector {
+   - api_url: str
+   - api_key: str
+
+   + update_firmware(robot_id: int, firmware_file: File)
+   + send_diagnostic_data(robot_id: int, diagnostic_data: DiagnosticData)
+}
+
+class DatabaseAdapter {
+   - db_url: str
+
+   + connect()
+   + disconnect()
+   + get_robot_data(robot_id: int): RobotData
+   + update_robot_data(robot_id: int, data: RobotData)
+}
+
+class APIGatewayAdapter {
+   - api_gateway_url: str
+
+   + update_firmware(robot_id: int, firmware_file: File)
+   + send_diagnostic_data(robot_id: int, diagnostic_data: DiagnosticData)
+}
+
+class ThirdPartyAdapter {
+   - third_party_url: str
+
+   + get_data() -> Any
+   + send_data(data: Any)
+}
+
+interface IInterfaceGateway {
+   + update_robot_data(robot_id: int, data: RobotData)
+   + get_robot_data(robot_id: int) -> RobotData
+}
+
+class RobotConfigurator {
+   - interface_gateway: IInterfaceGateway
+
+   + configure_robot(robot_id: int, configuration: RobotConfiguration)
+}
+
+class SelfDiagnostic {
+   - interface_gateway: IInterfaceGateway
+
+   + check_api_gateway(): bool
+   + check_business_logic(): bool
+   + check_data_management_layer(): bool
+   + check_metrics(): bool
+}
+
+RobotAPIConnector --> DatabaseAdapter
+RobotAPIConnector --> APIGatewayAdapter
+RobotAPIConnector --> ThirdPartyAdapter
+RobotConfigurator --> IInterfaceGateway
+SelfDiagnostic --> IInterfaceGateway
+@enduml
