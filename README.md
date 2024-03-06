@@ -18,8 +18,8 @@
 
 - [Урок 9. Способы организации передачи данных между компонентами приложения, протоколы и API. REST, gRPC, очереди](https://github.com/Bev0802/ArhetekturaPOHomeWork/tree/main/hw_9)
 
-- [Урок 10. ](https://github.com/Bev0802/ArhetekturaPOHomeWork/tree/main/hw_10)
+- [Урок 10. Структура приложения с пользовательским интерфейсом и базой данных (паттерн Repository)](https://github.com/Bev0802/ArhetekturaPOHomeWork/tree/main/hw_10)
 
-- [Урок 11. ](https://github.com/Bev0802/ArhetekturaPOHomeWork/tree/main/hw_11)
+- [Урок 11. Сервис-ориентированные архитектуры](https://github.com/Bev0802/ArhetekturaPOHomeWork/tree/main/hw_11)
 
-- [Урок 12. ](https://github.com/Bev0802/ArhetekturaPOHomeWork/tree/main/hw_12)
+- [Урок 12. Принципы тестирования приложений](https://github.com/Bev0802/ArhetekturaPOHomeWork/tree/main/hw_12)
